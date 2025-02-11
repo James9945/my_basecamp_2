@@ -339,6 +339,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activestorage
   bootsnap
   brakeman
   capybara
