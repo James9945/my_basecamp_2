@@ -1,10 +1,36 @@
-<p style="color: green"><%= notice %></p>
+<h1><%= @project.title %></h1> <!-- Display project title -->
+<p><%= @project.description %></p> <!-- Display project description -->
 
-<%= render @project %>
+<% if current_user && (current_user.admin? || current_user == @project.user) %>
+  <%= link_to "Edit", edit_project_path(@project), class: "btn btn-primary" %>
+  <%= link_to "Delete", project_path(@project), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<% end %>
 
-<div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
+<%= link_to "Back to Projects", projects_path, class: "btn btn-secondary" %>
 
-  <%= button_to "Destroy this project", @project, method: :delete %>
-</div>
+<hr>
+
+<!-- Create a New Discussion Button (Only for Admins or Project Owners) -->
+<% if current_user.has_role?(:admin) || current_user == @project.user %>
+  <%= link_to "Create New Thread", new_project_discussion_path(@project), class: "btn btn-primary mb-3" %>
+<% end %>
+
+<h2>Discussions</h2>
+
+<!-- Display Existing Discussions (Threads) -->
+<% if @project.discussions.any? %>
+  <ul class="list-group">
+    <% @project.discussions.each do |discussion| %>
+      <li class="list-group-item">
+        <%= link_to discussion.title, project_discussion_path(@project, discussion), class: "text-decoration-none" %>
+        
+        <% if current_user.admin? || current_user == @project.user %>
+          <%= link_to "Delete", project_discussion_path(@project, discussion), 
+              method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm float-end" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No discussions yet.</p>
+<% end %>

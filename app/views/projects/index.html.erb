@@ -1,16 +1,26 @@
-<p style="color: green"><%= notice %></p>
+<%= link_to "Create New Project", new_project_path, class: "btn btn-success mb-3" %>
 
-<% content_for :title, "Projects" %>
-
-<h1>Projects</h1>
-
-<div id="projects">
-  <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "Show this project", project %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New project", new_project_path %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= project.description %></td>
+        <td>
+          <%= link_to "Show", project_path(project), class: "btn btn-info btn-sm" %>
+          <% if current_user.admin? || current_user == project.user %>
+            <%= link_to "Edit", edit_project_path(project), class: "btn btn-primary btn-sm" %>
+            <%= link_to "Delete", project_path(project), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
