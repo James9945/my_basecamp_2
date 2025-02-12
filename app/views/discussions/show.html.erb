@@ -1,0 +1,23 @@
+<h2>Discussion: <%= @discussion.title %></h2>
+
+<h3>Messages</h3>
+<div>
+  <% @messages.each do |message| %>
+    <p>
+      <strong><%= message.user.email %>:</strong> <%= message.content %>
+      <% if current_user == message.user || current_user.has_role?(:admin) %>
+        <%= link_to "Edit", edit_project_discussion_message_path(@discussion.project, @discussion, message), class: "btn btn-warning btn-sm" %>
+        <%= link_to "Delete", project_discussion_message_path(@discussion.project, @discussion, message), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+      <% end %>
+    </p>
+  <% end %>
+</div>
+
+<%= form_with(model: [@discussion, Message.new], url: project_discussion_messages_path(@discussion.project, @discussion), local: true) do |form| %>
+  <div>
+    <%= form.text_area :content, placeholder: "Write a message...", class: "form-control" %>
+  </div>
+  <div>
+    <%= form.submit "Send", class: "btn btn-primary mt-2" %>
+  </div>
+<% end %>

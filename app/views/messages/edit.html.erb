@@ -1,0 +1,11 @@
+<h2>Edit Message</h2>
+
+<%= form_with(model: [@discussion, @message], local: true) do |form| %>
+  <div>
+    <%= form.text_area :content, class: "form-control" %>
+  </div>
+  <div>
+    <%= form.submit "Update Message", class: "btn btn-primary mt-2" %>
+    <%= link_to "Cancel", project_discussion_path(@discussion.project, @discussion), class: "btn btn-secondary mt-2" %>
+  </div>
+<% end %>
