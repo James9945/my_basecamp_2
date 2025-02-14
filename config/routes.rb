@@ -21,9 +21,14 @@ Rails.application.routes.draw do
 
   get "admin_dashboard", to: "admin_dashboard#index"
 
-  namespace :admin do
-    resources :users, only: [:index, :edit, :update]
+  namespace :admin_dashboard do
+    resources :users, only: [:index] do
+      member do
+        patch :update_role
+      end
+    end
   end
+
   
   resources :projects do
     resources :discussions, only: [:new, :create, :show, :destroy] do
