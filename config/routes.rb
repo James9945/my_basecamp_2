@@ -29,15 +29,11 @@ Rails.application.routes.draw do
     end
   end
 
-  
   resources :projects do
-    resources :discussions, only: [:new, :create, :show, :destroy] do
+    resources :discussions do
       resources :messages, only: [:create, :edit, :update, :destroy]
     end
   end
-  
-  
-  
-
-  
+ 
 end
+

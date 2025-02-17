@@ -26,8 +26,7 @@ class DiscussionsController < ApplicationController
   end
 
   private
-
-  # Fix: Define the set_project method
+  
   def set_project
     @project = Project.find(params[:project_id])
   end

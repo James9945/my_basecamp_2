@@ -41,7 +41,7 @@ class MessagesController < ApplicationController
     end
   
     def authorize_user
-      unless current_user == @message.user?
+      unless current_user == @message.user
         redirect_to project_discussion_path(@discussion.project, @discussion), alert: "Not authorized!"
       end
     end

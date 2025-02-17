@@ -38,37 +38,41 @@ class ProjectsController < ApplicationController
   
 
   # PATCH/PUT /projects/1 or /projects/1.json
- def update
-  if @project.update(project_params)
-    redirect_to @project, notice: "Project was successfully updated."
-  else
-    render :edit, status: :unprocessable_entity
+  def update
+    @project = Project.find(params[:id])
+    if @project.update(project_params.merge(user: current_user))
+      redirect_to @project, notice: "Project updated successfully!"
+    else
+      render :edit
+    end
   end
-end
+  
+  
 
-def destroy
-  if current_user.admin? || current_user == @project.user
-    @project.destroy!
-    redirect_to projects_path, notice: "Project was successfully deleted."
-  else
-    redirect_to projects_path, alert: "You are not authorized to delete this project."
+  def destroy
+    if current_user.admin? || current_user == @project.user
+      @project.destroy!
+      redirect_to projects_path, notice: "Project was successfully deleted."
+    else
+      redirect_to projects_path, alert: "You are not authorized to delete this project."
+    end
   end
-end
 
-private
+  private
 
-def project_params
-  params.require(:project).permit(:title, :description, :user_id)
-end
-
-
-def set_project
-  @project = Project.find(params[:id])
-end
-
-def authorize_project_owner
-  unless current_user.admin? || current_user == @project.user
-    redirect_to projects_path, alert: "You are not authorized to edit this project."
+  def project_params
+    params.require(:project).permit(:title, :description, :user_id, attachments: [])
   end
-end
+
+
+
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  def authorize_project_owner
+    unless current_user.admin? || current_user == @project.user
+      redirect_to projects_path, alert: "You are not authorized to edit this project."
+    end
+  end
 end

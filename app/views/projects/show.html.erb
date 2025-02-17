@@ -10,6 +10,18 @@
 
 <hr>
 
+<!-- Display Attachments -->
+<h3>Attachments</h3>
+<% if @project.attachments.any? %>
+  <ul>
+    <% @project.attachments.each do |attachment| %>
+      <li><%= link_to attachment.filename.to_s, url_for(attachment) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No attachments available.</p>
+<% end %>
+
 <!-- Create a New Discussion Button (Only for Admins or Project Owners) -->
 <% if current_user.has_role?(:admin) || current_user == @project.user %>
   <%= link_to "Create New Thread", new_project_discussion_path(@project), class: "btn btn-primary mb-3" %>
