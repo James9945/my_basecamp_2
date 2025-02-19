@@ -1,6 +1,5 @@
 class AdminDashboardController < ApplicationController
-  before_action :authenticate_user!
-  #before_action :authorize_admin  # This calls the method below
+  before_action :authenticate_user!  # Ensure users are logged in
 
   def index
     @users = User.all
@@ -20,8 +19,6 @@ class AdminDashboardController < ApplicationController
     redirect_to admin_dashboard_path
   end
 
- # private  # Ensure this is here
-
-  #
+  
 end
 
