@@ -12,8 +12,12 @@ test:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
   url: <%= ENV["DATABASE_URL"] %>
+  variables:
+    statement_timeout: 5000
 
 cable:
   <<: *default
