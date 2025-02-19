@@ -1,5 +1,6 @@
 class AdminDashboardController < ApplicationController
-  before_action :authenticate_user!  # Ensure users are logged in
+  before_action :authenticate_user!
+  before_action :authorize_admin  # This calls the method below
 
   def index
     @users = User.all
@@ -19,6 +20,10 @@ class AdminDashboardController < ApplicationController
     redirect_to admin_dashboard_path
   end
 
-  
+  private  # Ensure this is here
+
+  def authorize_admin
+    redirect_to root_path, alert: "Access denied." unless current_user.has_role?(:admin)
+  end
 end
 
