@@ -1,6 +1,6 @@
 class AdminDashboardController < ApplicationController
   before_action :authenticate_user!
-  #before_action :authorize_admin  # This calls the method below
+  before_action :authorize_admin  # This calls the method below
 
   def index
     @users = User.all
@@ -9,7 +9,7 @@ class AdminDashboardController < ApplicationController
   def update_role
     user = User.find(params[:id])
 
-    if params[:role] == "user"
+    if params[:role] == "admin"
       user.add_role(:admin)
       flash[:notice] = "#{user.email} is now an admin."
     elsif params[:role] == "remove_admin"
@@ -19,12 +19,12 @@ class AdminDashboardController < ApplicationController
 
     redirect_to admin_dashboard_path
   end
-=begin
+
   private  # Ensure this is here
 
   def authorize_admin
     redirect_to root_path, alert: "Access denied." unless current_user.has_role?(:admin)
   end
-=end
+
 end
 
