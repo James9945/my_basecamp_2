@@ -11,14 +11,20 @@ class AdminDashboardController < ApplicationController
 
     if params[:role] == "admin"
       user.add_role(:admin)
-      flash[:notice] = "#{user.email} is now an admin."
     elsif params[:role] == "remove_admin"
       user.remove_role(:admin)
-      flash[:alert] = "#{user.email} is no longer an admin."
     end
 
-    redirect_to admin_dashboard_path
+    if user.save  # Ensure role update is saved
+      flash[:notice] = "#{user.email} role updated successfully."
+    else
+      flash[:alert] = "Failed to update role."
+    end
+
+    redirect_to admin_dashboard_index_path
   end
+
+  
 
   private  # Ensure this is here
 

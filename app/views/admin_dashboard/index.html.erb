@@ -15,9 +15,9 @@
         <td><%= user.has_role?(:admin) ? "Admin" : "User" %></td>
         <td>
           <% if user.has_role?(:admin) %>
-            <%= link_to "Remove Admin", update_role_admin_dashboard_user_path(user, role: "remove_admin"), method: :patch, class: "btn btn-warning", data: { confirm: "Are you sure?" } %>
+            <%= link_to "Remove Admin", update_role_admin_dashboard_path(user, role: "remove_admin"), method: :patch, class: "btn btn-warning", data: { confirm: "Are you sure?" } %>
           <% else %>
-            <%= link_to "Make Admin", update_role_admin_dashboard_user_path(user, role: "admin"), method: :patch, class: "btn btn-success" %>
+            <%= link_to "Make Admin", update_role_admin_dashboard_path(user, role: "admin"), method: :patch, class: "btn btn-success" %>
           <% end %>
         </td>
       </tr>

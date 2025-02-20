@@ -21,11 +21,10 @@ Rails.application.routes.draw do
 
   get "admin_dashboard", to: "admin_dashboard#index"
 
-  namespace :admin_dashboard do
-    resources :users, only: [:index] do
-      member do
-        patch :update_role
-      end
+  
+  resources :admin_dashboard, only: [:index] do
+    member do
+      patch :update_role  # Ensure this is inside `member`
     end
   end
 
