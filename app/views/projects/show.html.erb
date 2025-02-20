@@ -27,7 +27,7 @@
   <%= link_to "Create New Thread", new_project_discussion_path(@project), class: "btn btn-primary mb-3" %>
 <% end %>
 
-<h2>Discussions</h2>
+<h2>Threads</h2>
 
 <!-- Display Existing Discussions (Threads) -->
 <% if @project.discussions.any? %>
@@ -44,5 +44,5 @@
     <% end %>
   </ul>
 <% else %>
-  <p>No discussions yet.</p>
+  <p>No Threads Yet.</p>
 <% end %>
